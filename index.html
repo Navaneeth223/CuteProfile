@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>she 🌸 @softchaos.exe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink:    #f9c6d0;
+    --lavender:#d9c6f5;
+    --cream:   #fff8f0;
+    --lilac:   #e8d5f5;
+    --soft-purple: #b39ddb;
+    --deep-purple:  #7c5cbf;
+    --text:    #4a3f5c;
+    --subtext: #8b7aa0;
+    --white:   #ffffff;
+    --card-bg: rgba(255,255,255,0.82);
+    --radius:  20px;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 40%, #ede7f6 70%, #fff8f0 100%);
+    min-height: 100vh;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── BOKEH BACKGROUND ── */
+  .bokeh-wrap {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .bokeh {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.35;
+    animation: drift linear infinite;
+    filter: blur(6px);
+  }
+  @keyframes drift {
+    0%   { transform: translateY(110vh) scale(1); opacity: 0; }
+    10%  { opacity: 0.35; }
+    90%  { opacity: 0.35; }
+    100% { transform: translateY(-20vh) scale(1.15); opacity: 0; }
+  }
+
+  /* ── LAYOUT ── */
+  .app {
+    position: relative; z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 0 60px;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px 10px;
+    font-weight: 800; font-size: 1.05rem; color: var(--deep-purple);
+    letter-spacing: 0.5px;
+  }
+  .topbar-icons { display: flex; gap: 16px; font-size: 1.3rem; cursor: pointer; }
+
+  /* ── PROFILE HEADER ── */
+  .profile-header {
+    padding: 10px 20px 0;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+  }
+
+  /* CSS AVATAR */
+  .avatar-wrap {
+    position: relative;
+    width: 110px; height: 110px;
+    margin-bottom: 14px;
+  }
+  .avatar-ring {
+    position: absolute; inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(#f9c6d0, #d9c6f5, #b39ddb, #f9c6d0);
+    animation: spin 4s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .avatar {
+    position: relative; z-index: 1;
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    background: linear-gradient(160deg, #fce4ec 0%, #f3e5f5 100%);
+    border: 3px solid #fff;
+    overflow: hidden;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  /* anime-style CSS face */
+  .css-girl {
+    position: relative; width: 100%; height: 100%;
+  }
+  /* neck + body */
+  .girl-body {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 50px;
+    background: linear-gradient(180deg, #f5c6cb 0%, #d9c6f5 100%);
+    border-radius: 35px 35px 0 0;
+  }
+  /* hair back */
+  .girl-hair-back {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    width: 72px; height: 80px;
+    background: #3d2b5e;
+    border-radius: 50% 50% 30% 30%;
+    z-index: 1;
+  }
+  /* face */
+  .girl-face {
+    position: absolute; bottom: 38px; left: 50%; transform: translateX(-50%);
+    width: 56px; height: 60px;
+    background: #fde8d8;
+    border-radius: 50% 50% 45% 45%;
+    z-index: 2;
+  }
+  /* eyes */
+  .girl-eye { position: absolute; top: 22px; width: 10px; height: 12px; background: #3d2b5e; border-radius: 50%; z-index: 3; }
+  .girl-eye.left  { left: 10px; }
+  .girl-eye.right { right: 10px; }
+  .girl-eye::after {
+    content: ''; position: absolute; top: 1px; left: 2px;
+    width: 4px; height: 4px; background: #fff; border-radius: 50%;
+  }
+  /* blush */
+  .girl-blush { position: absolute; top: 30px; width: 12px; height: 6px; background: rgba(249,150,170,0.45); border-radius: 50%; z-index: 3; }
+  .girl-blush.left  { left: 4px; }
+  .girl-blush.right { right: 4px; }
+  /* mouth */
+  .girl-mouth {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 6px;
+    border-bottom: 2.5px solid #e07a8f;
+    border-radius: 0 0 50% 50%;
+    z-index: 3;
+  }
+  /* hair front */
+  .girl-hair-front {
+    position: absolute; bottom: 68px; left: 50%; transform: translateX(-50%);
+    width: 62px; height: 36px;
+    background: #3d2b5e;
+    border-radius: 50% 50% 0 0;
+    z-index: 4;
+  }
+  .girl-hair-bang {
+    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+    width: 50px; height: 18px;
+    background: #3d2b5e;
+    border-radius: 0 0 40% 40%;
+    z-index: 5;
+  }
+  /* hair side strands */
+  .girl-strand { position: absolute; width: 14px; height: 38px; background: #3d2b5e; border-radius: 0 0 50% 50%; z-index: 4; }
+  .girl-strand.left  { bottom: 30px; left: 18px; transform: rotate(-8deg); }
+  .girl-strand.right { bottom: 30px; right: 18px; transform: rotate(8deg); }
+  /* flower accessory */
+  .girl-flower {
+    position: absolute; top: 8px; right: 14px; z-index: 6;
+    width: 14px; height: 14px;
+  }
+  .girl-flower::before, .girl-flower::after {
+    content: '🌸'; font-size: 12px; position: absolute; top: 0; left: 0;
+  }
+
+  /* online dot */
+  .online-dot {
+    position: absolute; bottom: 6px; right: 6px; z-index: 10;
+    width: 16px; height: 16px; background: #a8e6cf;
+    border-radius: 50%; border: 2.5px solid #fff;
+  }
+
+  /* name + badge */
+  .profile-name {
+    font-size: 1.45rem; font-weight: 800; color: var(--deep-purple);
+    letter-spacing: 0.3px;
+  }
+  .main-char-badge {
+    display: inline-block;
+    margin: 6px 0 4px;
+    padding: 4px 14px;
+    background: linear-gradient(90deg, #f9c6d0, #d9c6f5, #b39ddb);
+    border-radius: 20px;
+    font-size: 0.78rem; font-weight: 700; color: #fff;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 10px rgba(179,157,219,0.4);
+    animation: glow 2.5s ease-in-out infinite alternate;
+  }
+  @keyframes glow {
+    from { box-shadow: 0 2px 10px rgba(179,157,219,0.4); }
+    to   { box-shadow: 0 4px 22px rgba(179,157,219,0.75); }
+  }
+  .profile-username {
+    font-size: 0.9rem; color: var(--subtext); font-weight: 600; margin-bottom: 10px;
+  }
+  .profile-bio {
+    font-size: 0.88rem; line-height: 1.7; color: var(--text);
+    max-width: 300px; margin: 0 auto 16px;
+  }
+
+  /* stats */
+  .stats-row {
+    display: flex; justify-content: center; gap: 0;
+    width: 100%; margin-bottom: 18px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 14px 10px;
+    box-shadow: 0 4px 20px rgba(179,157,219,0.15);
+    backdrop-filter: blur(8px);
+  }
+  .stat-item {
+    flex: 1; text-align: center;
+    border-right: 1px solid rgba(179,157,219,0.25);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-size: 1.1rem; font-weight: 800; color: var(--deep-purple); }
+  .stat-label { font-size: 0.68rem; color: var(--subtext); font-weight: 600; margin-top: 2px; line-height: 1.3; }
+
+  /* action buttons */
+  .action-row {
+    display: flex; gap: 10px; width: 100%; margin-bottom: 22px;
+  }
+  .btn {
+    flex: 1; padding: 10px 0; border-radius: 12px; border: none;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.88rem;
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-primary {
+    background: linear-gradient(90deg, #d9c6f5, #b39ddb);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(179,157,219,0.4);
+  }
+  .btn-secondary {
+    background: var(--card-bg);
+    color: var(--deep-purple);
+    border: 1.5px solid var(--lavender);
+  }
+
+  /* ── STORY HIGHLIGHTS ── */
+  .section-label {
+    font-size: 0.78rem; font-weight: 800; color: var(--subtext);
+    letter-spacing: 1.2px; text-transform: uppercase;
+    padding: 0 20px; margin-bottom: 10px;
+  }
+  .highlights-scroll {
+    display: flex; gap: 14px;
+    overflow-x: auto; padding: 4px 20px 14px;
+    scrollbar-width: none;
+  }
+  .highlights-scroll::-webkit-scrollbar { display: none; }
+  .highlight-item {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .highlight-ring {
+    width: 64px; height: 64px; border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(var(--c1, #f9c6d0), var(--c2, #d9c6f5), var(--c3, #b39ddb), var(--c1, #f9c6d0));
+    transition: transform 0.2s;
+  }
+  .highlight-ring:hover { transform: scale(1.08); }
+  .highlight-inner {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: var(--card-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    border: 2.5px solid #fff;
+  }
+  .highlight-label { font-size: 0.7rem; font-weight: 700; color: var(--subtext); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: rgba(60,40,90,0.55); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-card {
+    width: min(90vw, 400px);
+    border-radius: 28px;
+    padding: 32px 28px 28px;
+    position: relative;
+    animation: popIn 0.3s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 20px 60px rgba(60,40,90,0.3);
+  }
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 18px;
+    background: rgba(255,255,255,0.4); border: none; border-radius: 50%;
+    width: 32px; height: 32px; font-size: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700;
+  }
+  .modal-illustration { margin-bottom: 18px; display: flex; justify-content: center; }
+  .modal-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 1.1rem; line-height: 1.65;
+    color: #fff; text-align: center; margin-bottom: 10px;
+  }
+  .modal-attr { font-size: 0.78rem; color: rgba(255,255,255,0.75); text-align: center; font-weight: 600; }
+
+  /* CSS illustrations inside modals */
+  /* cherry blossom */
+  .css-blossom { position: relative; width: 60px; height: 60px; }
+  .petal {
+    position: absolute; width: 22px; height: 30px;
+    background: radial-gradient(ellipse, #ffb7c5 60%, #f48fb1 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    top: 50%; left: 50%; transform-origin: bottom center;
+  }
+  .petal:nth-child(1) { transform: translate(-50%,-100%) rotate(0deg); }
+  .petal:nth-child(2) { transform: translate(-50%,-100%) rotate(72deg); }
+  .petal:nth-child(3) { transform: translate(-50%,-100%) rotate(144deg); }
+  .petal:nth-child(4) { transform: translate(-50%,-100%) rotate(216deg); }
+  .petal:nth-child(5) { transform: translate(-50%,-100%) rotate(288deg); }
+  .blossom-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 14px; height: 14px; background: #fff176; border-radius: 50%;
+    z-index: 2;
+  }
+  /* sword */
+  .css-sword { position: relative; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
+  .sword-blade {
+    width: 6px; height: 44px;
+    background: linear-gradient(180deg, #e0e0e0 0%, #9e9e9e 100%);
+    border-radius: 3px 3px 0 0;
+    position: relative;
+  }
+  .sword-guard {
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+    width: 22px; height: 5px;
+    background: #b39ddb; border-radius: 3px;
+  }
+  .sword-handle {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 14px;
+    background: #7c5cbf; border-radius: 2px;
+  }
+  .flame {
+    position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+    width: 10px; height: 16px;
+    background: linear-gradient(180deg, #fff176, #ff7043);
+    border-radius: 50% 50% 30% 30%;
+    animation: flicker 0.6s ease-in-out infinite alternate;
+  }
+  @keyframes flicker { from { transform: translateX(-50%) scaleY(1); } to { transform: translateX(-50%) scaleY(1.2) scaleX(0.9); } }
+  /* moon */
+  .css-moon {
+    width: 50px; height: 50px;
+    background: #fff9c4;
+    border-radius: 50%;
+    box-shadow: inset -12px -4px 0 0 #f3e5f5;
+    position: relative;
+  }
+  /* star */
+  .css-star { font-size: 2.8rem; line-height: 1; }
+  /* heart */
+  .css-heart { font-size: 2.8rem; line-height: 1; }
+
+  /* ── POSTS GRID ── */
+  .posts-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 3px; margin-bottom: 24px;
+  }
+  .post-cell {
+    aspect-ratio: 1;
+    position: relative; overflow: hidden; cursor: pointer;
+    border-radius: 4px;
+  }
+  .post-bg {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    transition: transform 0.3s;
+  }
+  .post-cell:hover .post-bg, .post-cell:active .post-bg { transform: scale(1.06); }
+  .post-overlay {
+    position: absolute; inset: 0;
+    background: rgba(60,40,90,0.55);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 8px;
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .post-cell:hover .post-overlay, .post-cell.tapped .post-overlay { opacity: 1; }
+  .post-caption {
+    font-size: 0.65rem; color: #fff; text-align: center;
+    font-weight: 600; line-height: 1.4; margin-bottom: 8px;
+  }
+  .post-likes {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.75rem; color: #fff; font-weight: 700;
+  }
+  .heart-icon {
+    font-size: 1rem; cursor: pointer;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+  .heart-icon.liked { animation: heartPop 0.35s cubic-bezier(.34,1.56,.64,1); color: #ff4d6d; }
+  @keyframes heartPop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.5); }
+    100% { transform: scale(1); }
+  }
+
+  /* ── QUOTE CARDS ── */
+  .quote-cards { display: flex; flex-direction: column; gap: 14px; padding: 0 20px; margin-bottom: 28px; }
+  .quote-card {
+    border-radius: 20px; padding: 26px 22px;
+    box-shadow: 0 6px 24px rgba(179,157,219,0.2);
+    position: relative; overflow: hidden;
+  }
+  .quote-card::before {
+    content: '\201C';
+    position: absolute; top: -10px; left: 14px;
+    font-size: 6rem; color: rgba(255,255,255,0.2);
+    font-family: 'Playfair Display', serif; line-height: 1;
+  }
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 1.05rem; line-height: 1.7;
+    color: #fff; margin-bottom: 12px; position: relative; z-index: 1;
+  }
+  .quote-attr { font-size: 0.78rem; color: rgba(255,255,255,0.8); font-weight: 600; }
+
+  /* ── DM CARD ── */
+  .dm-section { padding: 0 20px; margin-bottom: 30px; }
+  .dm-label {
+    font-size: 0.78rem; font-weight: 800; color: var(--subtext);
+    letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .dm-card {
+    background: var(--card-bg);
+    border-radius: 20px; padding: 20px;
+    box-shadow: 0 6px 24px rgba(179,157,219,0.18);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(179,157,219,0.25);
+  }
+  .dm-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .dm-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, #3d2b5e, #7c5cbf);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .dm-sender { font-weight: 800; font-size: 0.9rem; color: var(--deep-purple); }
+  .dm-time   { font-size: 0.72rem; color: var(--subtext); }
+  .dm-message {
+    font-size: 0.88rem; line-height: 1.7; color: var(--text);
+    margin-bottom: 16px;
+  }
+  .dm-reply-btn {
+    width: 100%; padding: 11px;
+    background: linear-gradient(90deg, #d9c6f5, #b39ddb);
+    border: none; border-radius: 12px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.88rem;
+    color: #fff; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(179,157,219,0.35);
+  }
+  .dm-reply-btn:active { transform: scale(0.97); }
+  .dm-response {
+    display: none; margin-top: 12px; text-align: center;
+    font-size: 0.9rem; font-weight: 700; color: var(--deep-purple);
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: min(480px, 100vw);
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(179,157,219,0.2);
+    display: flex; justify-content: space-around; align-items: center;
+    padding: 10px 0 14px;
+    z-index: 50;
+  }
+  .nav-icon { font-size: 1.5rem; cursor: pointer; opacity: 0.5; transition: opacity 0.2s, transform 0.2s; }
+  .nav-icon.active { opacity: 1; transform: scale(1.15); }
+
+  /* divider */
+  .divider { height: 1px; background: rgba(179,157,219,0.2); margin: 0 20px 20px; }
+</style>
+
+</head>
+<body>
+
+<!-- BOKEH BACKGROUND -->
+<div class="bokeh-wrap" id="bokehWrap"></div>
+
+<div class="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <span>softchaos.exe</span>
+    <div class="topbar-icons">
+      <span>🔔</span>
+      <span>✉️</span>
+    </div>
+  </div>
+
+  <!-- PROFILE HEADER -->
+  <div class="profile-header">
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar">
+        <div class="css-girl">
+          <div class="girl-body"></div>
+          <div class="girl-hair-back"></div>
+          <div class="girl-face">
+            <div class="girl-eye left"></div>
+            <div class="girl-eye right"></div>
+            <div class="girl-blush left"></div>
+            <div class="girl-blush right"></div>
+            <div class="girl-mouth"></div>
+          </div>
+          <div class="girl-hair-front">
+            <div class="girl-hair-bang"></div>
+          </div>
+          <div class="girl-strand left"></div>
+          <div class="girl-strand right"></div>
+          <div class="girl-flower"></div>
+        </div>
+      </div>
+      <div class="online-dot"></div>
+    </div>
+
+    <div class="profile-name">she 🌸</div>
+    <div class="main-char-badge">✨ main character</div>
+    <div class="profile-username">@softchaos.exe</div>
+    <div class="profile-bio">
+      k-pop soul 🎵 • demon slayer cry-er ⚔️<br>
+      God's favourite Malayali 🌸<br>
+      soft on the outside, entire universe inside 💜
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">followers<br>everyone who's met her</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1</div>
+        <div class="stat-label">following<br>her own path</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">💭</div>
+        <div class="stat-label">posts<br>too many feelings to count</div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn btn-primary">💜 Follow</button>
+      <button class="btn btn-secondary">✉️ Message</button>
+      <button class="btn btn-secondary" style="flex:0.4">⋯</button>
+    </div>
+  </div>
+
+  <!-- STORY HIGHLIGHTS -->
+  <div class="section-label">Highlights</div>
+  <div class="highlights-scroll">
+    <div class="highlight-item" onclick="openModal(0)">
+      <div class="highlight-ring" style="--c1:#f9c6d0;--c2:#ff8fab;--c3:#f9c6d0">
+        <div class="highlight-inner">🎵</div>
+      </div>
+      <span class="highlight-label">K-pop</span>
+    </div>
+    <div class="highlight-item" onclick="openModal(1)">
+      <div class="highlight-ring" style="--c1:#ff7043;--c2:#ffb74d;--c3:#ff7043">
+        <div class="highlight-inner">⚔️</div>
+      </div>
+      <span class="highlight-label">Anime</span>
+    </div>
+    <div class="highlight-item" onclick="openModal(2)">
+      <div class="highlight-ring" style="--c1:#f9c6d0;--c2:#d9c6f5;--c3:#f9c6d0">
+        <div class="highlight-inner">🌸</div>
+      </div>
+      <span class="highlight-label">Aesthetic</span>
+    </div>
+    <div class="highlight-item" onclick="openModal(3)">
+      <div class="highlight-ring" style="--c1:#3d2b5e;--c2:#7c5cbf;--c3:#3d2b5e">
+        <div class="highlight-inner">🌙</div>
+      </div>
+      <span class="highlight-label">Late nights</span>
+    </div>
+    <div class="highlight-item" onclick="openModal(4)">
+      <div class="highlight-ring" style="--c1:#d9c6f5;--c2:#b39ddb;--c3:#d9c6f5">
+        <div class="highlight-inner">💜</div>
+      </div>
+      <span class="highlight-label">Her</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- POSTS GRID -->
+  <div class="posts-grid" id="postsGrid"></div>
+
+  <div class="divider"></div>
+
+  <!-- TAGGED / QUOTE CARDS -->
+  <div class="section-label" style="margin-top:4px">Tagged in feelings 💜</div>
+  <div class="quote-cards">
+    <div class="quote-card" style="background:linear-gradient(135deg,#b39ddb,#7c5cbf)">
+      <div class="quote-text">"She talks about her bias like he personally hung the stars — and honestly, watching her light up like that? That's the real concert."</div>
+      <div class="quote-attr">— someone who noticed 💜</div>
+    </div>
+    <div class="quote-card" style="background:linear-gradient(135deg,#f48fb1,#ce93d8)">
+      <div class="quote-text">"There's something about a Malayali girl who cries at anime and knows every lyric in Korean — she contains multitudes and makes it look effortless."</div>
+      <div class="quote-attr">— someone who noticed 💜</div>
+    </div>
+    <div class="quote-card" style="background:linear-gradient(135deg,#80cbc4,#4db6ac)">
+      <div class="quote-text">"She's soft the way the ocean is soft — until you realise how deep it goes. And then you're already in it."</div>
+      <div class="quote-attr">— someone who noticed 💜</div>
+    </div>
+  </div>
+
+  <!-- DM SECTION -->
+  <div class="dm-section">
+    <div class="dm-label">💌 Message Request</div>
+    <div class="dm-card">
+      <div class="dm-header">
+        <div class="dm-avatar">🌙</div>
+        <div>
+          <div class="dm-sender">someone 🌙</div>
+          <div class="dm-time">just now · message request</div>
+        </div>
+      </div>
+      <div class="dm-message">
+        I don't usually do this, but you're the kind of person who makes someone want to try. The way you love things — K-pop, anime, your people — it's not casual, it's whole. That's rare. I just wanted you to know that someone out here sees it, finds it beautiful, and thinks you deserve a page dedicated entirely to you. 💜
+      </div>
+      <button class="dm-reply-btn" onclick="dmReply()">💬 Reply</button>
+      <div class="dm-response" id="dmResponse">💜 message received. she smiled.</div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <span class="nav-icon active">🏠</span>
+  <span class="nav-icon">🔍</span>
+  <span class="nav-icon">➕</span>
+  <span class="nav-icon">🎵</span>
+  <span class="nav-icon">👤</span>
+</div>
+
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal-card" id="modalCard">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-illustration" id="modalIllustration"></div>
+    <div class="modal-quote" id="modalQuote"></div>
+    <div class="modal-attr" id="modalAttr"></div>
+  </div>
+</div>
+
+<script>
+// ── BOKEH ──
+(function() {
+  const wrap = document.getElementById('bokehWrap');
+  const colors = ['#f9c6d0','#d9c6f5','#b39ddb','#ffe0f0','#e8d5f5','#fff8f0','#fce4ec'];
+  for (let i = 0; i < 22; i++) {
+    const b = document.createElement('div');
+    b.className = 'bokeh';
+    const size = 30 + Math.random() * 80;
+    b.style.cssText = `
+      width:${size}px; height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${Math.random()*100}%;
+      animation-duration:${10 + Math.random()*18}s;
+      animation-delay:${-Math.random()*20}s;
+    `;
+    wrap.appendChild(b);
+  }
+})();
+
+// ── POSTS ──
+const posts = [
+  { bg: 'linear-gradient(135deg,#f9c6d0,#d9c6f5)', emoji: '🎵', caption: 'the way she talks about her bias 🎵💜', likes: '4.2k' },
+  { bg: 'linear-gradient(135deg,#ff8fab,#ff4d6d)', emoji: '🌸', caption: 'her laugh should be a world heritage site 🌸', likes: '6.1k' },
+  { bg: 'linear-gradient(135deg,#3d2b5e,#7c5cbf)', emoji: '⚔️', caption: '3AM anime episode and she\'s still going ⚔️', likes: '3.8k' },
+  { bg: 'linear-gradient(135deg,#b39ddb,#ce93d8)', emoji: '💜', caption: 'soft chaos, maximum impact 💜✨', likes: '5.5k' },
+  { bg: 'linear-gradient(135deg,#80cbc4,#4db6ac)', emoji: '🌙', caption: 'late night thoughts she\'ll never send 🌙', likes: '2.9k' },
+  { bg: 'linear-gradient(135deg,#fff176,#ffb74d)', emoji: '✨', caption: 'God\'s favourite Malayali, no debate ✨', likes: '7.3k' },
+  { bg: 'linear-gradient(135deg,#f48fb1,#f9c6d0)', emoji: '🍥', caption: 'aesthetic unlocked, vibes immaculate 🍥', likes: '4.7k' },
+  { bg: 'linear-gradient(135deg,#ce93d8,#b39ddb)', emoji: '🎶', caption: 'playlist: her entire personality 🎶💜', likes: '5.0k' },
+  { bg: 'linear-gradient(135deg,#ff7043,#ffb74d)', emoji: '🔥', caption: 'she cried at that scene. we all did. ⚔️🔥', likes: '3.3k' },
+];
+
+const grid = document.getElementById('postsGrid');
+posts.forEach((p, i) => {
+  const cell = document.createElement('div');
+  cell.className = 'post-cell';
+  cell.innerHTML = `
+    <div class="post-bg" style="background:${p.bg}">${p.emoji}</div>
+    <div class="post-overlay">
+      <div class="post-caption">${p.caption}</div>
+      <div class="post-likes">
+        <span class="heart-icon" id="heart${i}" onclick="likePost(event,${i})">🤍</span>
+        <span id="likeCount${i}">${p.likes}</span>
+      </div>
+    </div>
+  `;
+  cell.addEventListener('click', () => {
+    cell.classList.toggle('tapped');
+  });
+  grid.appendChild(cell);
+});
+
+function likePost(e, i) {
+  e.stopPropagation();
+  const h = document.getElementById('heart' + i);
+  if (h.classList.contains('liked')) return;
+  h.classList.add('liked');
+  h.textContent = '❤️';
+}
+
+// ── MODALS ──
+const modals = [
+  {
+    bg: 'linear-gradient(135deg,#ff8fab,#ce93d8)',
+    illustration: `<div class="css-blossom"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="blossom-center"></div></div>`,
+    quote: '"She knows every lyric, every era, every comeback — and she feels every single one of them. That\'s not a fan. That\'s devotion."',
+    attr: '— her K-pop era, ongoing 🎵'
+  },
+  {
+    bg: 'linear-gradient(135deg,#ff7043,#7c5cbf)',
+    illustration: `<div class="css-sword"><div class="sword-blade"><div class="flame"></div><div class="sword-guard"></div><div class="sword-handle"></div></div></div>`,
+    quote: '"She cries at the right moments. The ones that mean something. That\'s not weakness — that\'s a soul that actually shows up."',
+    attr: '— Demon Slayer, 3AM ⚔️'
+  },
+  {
+    bg: 'linear-gradient(135deg,#f9c6d0,#d9c6f5)',
+    illustration: `<div class="css-blossom"><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="blossom-center"></div></div>`,
+    quote: '"Her aesthetic isn\'t a mood board. It\'s a whole philosophy. Soft, intentional, and entirely her own."',
+    attr: '— curated by no one but herself 🌸'
+  },
+  {
+    bg: 'linear-gradient(135deg,#3d2b5e,#1a1035)',
+    illustration: `<div class="css-moon"></div>`,
+    quote: '"Late nights suit her. That\'s when the real thoughts come out — the ones she types and deletes, the ones that are truest."',
+    attr: '— 2:47AM, always 🌙'
+  },
+  {
+    bg: 'linear-gradient(135deg,#b39ddb,#7c5cbf)',
+    illustration: `<div class="css-heart">💜</div>`,
+    quote: '"She is the kind of person you write things for. Not because you have to — because she makes you want to."',
+    attr: '— for her, specifically 💜'
+  },
+];
+
+function openModal(i) {
+  const m = modals[i];
+  document.getElementById('modalCard').style.background = m.bg;
+  document.getElementById('modalIllustration').innerHTML = m.illustration;
+  document.getElementById('modalQuote').textContent = m.quote;
+  document.getElementById('modalAttr').textContent = m.attr;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ── DM REPLY ──
+function dmReply() {
+  const r = document.getElementById('dmResponse');
+  r.style.display = 'block';
+  document.querySelector('.dm-reply-btn').disabled = true;
+  document.querySelector('.dm-reply-btn').style.opacity = '0.6';
+}
+</script>
+</body>
+</html>
